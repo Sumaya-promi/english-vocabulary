@@ -21,6 +21,40 @@ const loadLevelWord = (id) => {
         })
 }
 
+const loadWordDetail=async(id)=>{
+const url =`https://openapi.programming-hero.com/api/word/${id}`
+const res = await fetch(url)
+const details = await res.json()
+displayWordDetails (details.data)
+}
+
+const displayWordDetails =(word)=>{
+const detailsBox = document.getElementById('details-container')
+detailsBox.innerHTML=`
+
+        <div class="">
+          <h2 class="text-2xl font-bold">${word.word} ( <i class="fa-solid fa-microphone-lines"></i> :${word.pronunciation}) </h2>
+        </div>
+        <div class="">
+          <h2 class="font-bold">meaning </h2>
+          <p>${word.meaning} </p>
+        </div>
+        <div class="">
+          <h2 class="font-bold">example </h2>
+          <p>${word.sentence} </p>
+        </div>
+        <div class="">
+          <h2 class="font-bold">synonym </h2>
+          <span class="btn">syn1</span>
+          <span class="btn">syn2</span>
+          <span class="btn">syn3</span>
+        </div>
+
+`
+ document.getElementById('word_modal').showModal()
+
+}
+
 const displayLevelWord = (words) => {
     const wordContainer = document.getElementById('word-container')
     wordContainer.innerHTML = "";
@@ -43,7 +77,7 @@ const displayLevelWord = (words) => {
         <p class="my-3"> Meaning /Pronounciation </p>
         <p class="text-xl font-semibold font-bangla">"${word.meaning?word.meaning:"meaning not found"} / ${word.pronunciation?word.pronunciation:"pronunciation not found"}"</p>
         <div class="flex justify-between items-center mt-5">
-          <button  onclick="my_modal_5.showModal()" class="bg-gray-300 hover:bg-gray-400 p-1 rounded-md"><i class="fa-solid fa-circle-info"></i></button>
+          <button  onclick="loadWordDetail(${word.id})" class="bg-gray-300 hover:bg-gray-400 p-1 rounded-md"><i class="fa-solid fa-circle-info"></i></button>
           <button class="bg-gray-300 hover:bg-gray-400 p-1 rounded-md"><i class="fa-solid fa-volume-high"></i></button>
         </div>
       </div>
