@@ -1,12 +1,17 @@
+const createElement = (arr) => {
+    const htmlElements = arr.map((el) => `<span class="btn">${el}</span>`)
+    return (htmlElements.join(" "))
+}
+
 const loadLessons = () => {
     fetch('https://openapi.programming-hero.com/api/levels/all')
         .then((res) => res.json())
         .then((data) => displayLesson(data.data))
 }
 
-const removeActive=()=>{
+const removeActive = () => {
     const lessonBtns = document.querySelectorAll('.lesson-btn')
-    lessonBtns.forEach((btn)=> btn.classList.remove('active'))
+    lessonBtns.forEach((btn) => btn.classList.remove('active'))
 }
 
 const loadLevelWord = (id) => {
@@ -21,16 +26,16 @@ const loadLevelWord = (id) => {
         })
 }
 
-const loadWordDetail=async(id)=>{
-const url =`https://openapi.programming-hero.com/api/word/${id}`
-const res = await fetch(url)
-const details = await res.json()
-displayWordDetails (details.data)
+const loadWordDetail = async (id) => {
+    const url = `https://openapi.programming-hero.com/api/word/${id}`
+    const res = await fetch(url)
+    const details = await res.json()
+    displayWordDetails(details.data)
 }
 
-const displayWordDetails =(word)=>{
-const detailsBox = document.getElementById('details-container')
-detailsBox.innerHTML=`
+const displayWordDetails = (word) => {
+    const detailsBox = document.getElementById('details-container')
+    detailsBox.innerHTML = `
 
         <div class="">
           <h2 class="text-2xl font-bold">${word.word} ( <i class="fa-solid fa-microphone-lines"></i> :${word.pronunciation}) </h2>
@@ -45,13 +50,11 @@ detailsBox.innerHTML=`
         </div>
         <div class="">
           <h2 class="font-bold">synonym </h2>
-          <span class="btn">syn1</span>
-          <span class="btn">syn2</span>
-          <span class="btn">syn3</span>
+           <div class="">${createElement(word.synonyms)}</div>
         </div>
 
 `
- document.getElementById('word_modal').showModal()
+    document.getElementById('word_modal').showModal()
 
 }
 
@@ -73,9 +76,9 @@ const displayLevelWord = (words) => {
         const card = document.createElement('div')
         card.innerHTML = `
     <div class="bg-white p-10 rounded-xl text-center">
-        <h2 class="font-bold text-2xl">${word.word?word.word:"word not found"}</h2>
+        <h2 class="font-bold text-2xl">${word.word ? word.word : "word not found"}</h2>
         <p class="my-3"> Meaning /Pronounciation </p>
-        <p class="text-xl font-semibold font-bangla">"${word.meaning?word.meaning:"meaning not found"} / ${word.pronunciation?word.pronunciation:"pronunciation not found"}"</p>
+        <p class="text-xl font-semibold font-bangla">"${word.meaning ? word.meaning : "meaning not found"} / ${word.pronunciation ? word.pronunciation : "pronunciation not found"}"</p>
         <div class="flex justify-between items-center mt-5">
           <button  onclick="loadWordDetail(${word.id})" class="bg-gray-300 hover:bg-gray-400 p-1 rounded-md"><i class="fa-solid fa-circle-info"></i></button>
           <button class="bg-gray-300 hover:bg-gray-400 p-1 rounded-md"><i class="fa-solid fa-volume-high"></i></button>
