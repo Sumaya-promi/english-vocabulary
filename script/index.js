@@ -43,7 +43,7 @@ const displayLevelWord = (words) => {
         <p class="my-3"> Meaning /Pronounciation </p>
         <p class="text-xl font-semibold font-bangla">"${word.meaning?word.meaning:"meaning not found"} / ${word.pronunciation?word.pronunciation:"pronunciation not found"}"</p>
         <div class="flex justify-between items-center mt-5">
-          <button class="bg-gray-300 hover:bg-gray-400 p-1 rounded-md"><i class="fa-solid fa-circle-info"></i></button>
+          <button  onclick="my_modal_5.showModal()" class="bg-gray-300 hover:bg-gray-400 p-1 rounded-md"><i class="fa-solid fa-circle-info"></i></button>
           <button class="bg-gray-300 hover:bg-gray-400 p-1 rounded-md"><i class="fa-solid fa-volume-high"></i></button>
         </div>
       </div>
