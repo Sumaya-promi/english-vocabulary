@@ -3,16 +3,16 @@ const createElement = (arr) => {
     return (htmlElements.join(" "))
 }
 
-const manageSpinner=(status)=>{
-if(status == true){
-    document.getElementById('spinner').classList.remove('hidden')
-    document.getElementById('word-container').classList.add('hidden')
-}
-else{
-    document.getElementById('word-container').classList.remove('hidden')
-    document.getElementById('spinner').classList.add('hidden')
- 
-}
+const manageSpinner = (status) => {
+    if (status == true) {
+        document.getElementById('spinner').classList.remove('hidden')
+        document.getElementById('word-container').classList.add('hidden')
+    }
+    else {
+        document.getElementById('word-container').classList.remove('hidden')
+        document.getElementById('spinner').classList.add('hidden')
+
+    }
 }
 const loadLessons = () => {
     fetch('https://openapi.programming-hero.com/api/levels/all')
@@ -122,13 +122,17 @@ const displayLesson = (lessons) => {
 }
 
 loadLessons();
-document.getElementById('btn-search').addEventListener('click',()=>{
-    const input = document.getElementById('input-search')
-    const searchValue =input.value.trim().toLowerCase()
+document.getElementById('btn-search').addEventListener('click', () => {
 
+    const input = document.getElementById('input-search')
+    const searchValue = input.value.trim().toLowerCase()
+    removeActive();
     fetch('https://openapi.programming-hero.com/api/words/all')
-    .then((res)=>res.json())
-    .then((data)=>{
-        const allWords=data.data;
-    })
+        .then((res) => res.json())
+        .then((data) => {
+            const allWords = data.data;
+            const filterWords = allWords.filter((word) => word.word.toLowerCase().includes(searchValue))
+            displayLevelWord(filterWords);
+        })
+
 })
